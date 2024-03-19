@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit as st
 from keras.models import load_model
 from PIL import Image, ImageOps
 import numpy as np
@@ -6,11 +7,16 @@ import numpy as np
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
-# Load the model
-model = load_model("keras_model.h5", compile=False)
+# Try to load the model and handle exceptions
+try:
+    model = load_model("keras_model.h5", compile=False)
+except Exception as e:
+    print(f"Error loading model: {e}")
+    model = None
 
 # Load the labels
 class_names = open("labels.txt", "r").readlines()
+
 
 def predict(image):
     # Create the array of the right shape to feed into the keras model
